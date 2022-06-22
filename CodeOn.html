@@ -2,15 +2,27 @@
 <html lang = "en-US">
 	<head>
 		<meta charset = "UTF-8"/>
-		<title>Simple Substitution Cipher</title>
+		<title>Substitution Cipher Encoder</title>
 		<style>
 			* {
 				transition: ease 0.1s;
+				-webkit-scrollbar-color: rgb(0, 150, 255) white;
+				-webkit-scrollbar-width: thin;
+			}
+			*::-webkit-scrollbar {
+			    width: 7.5px;
+			    background: rgb(0, 150, 255);
+			    border-radius: 0px 10px 0px 0px;
+			}
+			*::-webkit-scrollbar-thumb {
+			    background: rgb(0, 0, 255);
+			    border-radius: 0px 10px 0px 0px;
+			}
+			*::-webkit-scrollbar-thumb {
+			    background: rgb(0, 0, 150);
 			}
 			body {
-				background: rgb(0, 150, 255);
-				text-align: center;
-				align-items: center;
+				background: linear-gradient(rgb(0, 200, 255), rgb(0, 50, 255)) rgb(0, 150, 255);
 				font-family: "Calibri", sans-serif, serif;
 				height: 100%;
 			}
@@ -18,12 +30,15 @@
 				font-family: "Calibri Light", sans-serif, serif;
 			}
 			textarea {
-				max-width: 100%;
+				max-width: calc(100% - 1rem);
 				max-height: 4rem;
-				min-width: 100%;
+				min-width: calc(100% - 1rem);
 				min-height: 4rem;
 				border-radius: 5px 0px 5px 0px;
 				border: 1px solid rgb(0, 150, 255);
+				padding-left: 0.5rem;
+				padding-right: 0.5rem;
+				font-family: "Calibri", sans-serif, serif;
 			}
 			#capson {
 				background: black;
