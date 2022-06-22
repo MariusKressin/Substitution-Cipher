@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang = "en-US">
+	<head>
+		<meta charset = "UTF-8"/>
+		<title>Simple Substitution Cipher</title>
+		<style>
+			* {
+				transition: ease 0.1s;
+			}
+			body {
+				background: rgb(0, 150, 255);
+				text-align: center;
+				align-items: center;
+				font-family: "Calibri", sans-serif, serif;
+				height: 100%;
+			}
+			h1 {
+				font-family: "Calibri Light", sans-serif, serif;
+			}
+			textarea {
+				max-width: 100%;
+				max-height: 4rem;
+				min-width: 100%;
+				min-height: 4rem;
+				border-radius: 5px 0px 5px 0px;
+				border: 1px solid rgb(0, 150, 255);
+			}
+			#capson {
+				background: black;
+				color: blue;
+			}
+			button {
+				width: 100%;
+				border: 1px solid rgb(0, 150, 255);
+				background: white;
+				color: rgb(0, 0, 200);
+				border-radius: 5px 0px 5px 0px;
+			}
+			button:hover {
+				background: rgb(0, 200, 255);
+			}
+			div.card-container {
+				display: flex;
+				justify-content: center;
+				height: calc(100vh - 1rem);
+			}
+			div.card {
+				width: 20rem;
+				height: 17.2rem;
+				background: white;
+				padding: 1rem;
+				text-align: center;
+				border-radius: 10px 0px 10px 0px;
+				border-left: solid rgb(0, 100, 255) 2px;
+				border-right: solid rgb(0, 100, 255) 2px;
+				margin: auto;
+				vertical-align: middle;
+			}
+			div.container {
+				border-radius: 0px 10px 0px 10px;
+				border: solid rgb(0, 100, 255) 2px;
+				padding: 1rem;
+				overflow: auto;
+				height: 15.2rem;
+			}
+			div.container * {
+				padding-top: 0.2rem;
+				padding-bottom: 0.2rem;
+				margin-top: 0.2rem;
+				margin-bottom: 0.2rem;
+			}
+			div.output {
+				padding-bottom: 0px;
+				margin-bottom: 0px;
+			}
+			@media (max-height: 20.5rem) {
+				body {
+					background: white;
+				}
+				div.card {
+					width: 100%;
+					height: calc(100vh - 3rem);
+				}
+				div.container {
+					width: calc(100% - 2rem);
+					height: calc(100vh - 5rem);
+				}
+				textarea {
+					height: 50%;
+				}
+			}
+			@media (max-width: 450px) {
+				body {
+					background: white;
+				}
+				div.card {
+					width: 100%;
+					height: calc(100vh - 3rem);
+				}
+				div.container {
+					width: calc(100% - 2rem);
+					height: calc(100vh - 5rem);
+				}
+				textarea {
+					height: 50%;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class = "card-container">
+			<div class = "card">
+				<div class = "container">
+					<h1>Substitution Cipher</h1>
+					<textarea id = "text" placeholder = "Enter text to be encoded here"></textarea>
+					<br/>
+					<label for = "capson">Make the output all caps:</label>
+					<input type = "checkbox" value = "" id = "capson" name = "capson">
+					<br/>
+					<button id = "sub">Submit</button>
+					<br/>
+					<div id = "output">
+						Output:
+						<div id = "output_text"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			function byId(el){
+				return document.getElementById(el);
+			}
+			byId("sub").addEventListener("click", function(){
+				var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+				var inputAlphabetText = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+				var inputAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+				var alphabetLC = "abcdefghijklmnopqrstuvwxyz".split("");
+				var inputAlphabetLC = "abcdefghijklmnopqrstuvwxyz".split("");
+				var inputAlphabetLCText = "abcdefghijklmnopqrstuvwxyz";
+				function toLC(arr){
+					var ol = [];
+					for(var l in arr){
+						var m = 0;
+						for(var n in alphabet){
+							if(arr[l] == alphabet[n]){
+								ol.push(alphabetLC[n]);
+							}else{
+								m++;
+							}
+						}
+						if(m == 26){
+							ol.push(arr[l]);
+						}
+					}
+					console.log(ol[0]);
+					return ol;
+				}
+				var outputLetters = [];
+				var inputLetters = [];
+				var cipherAlphabet = [];
+				var cipherText = "";
+				for(var i = 0; i <= 25; i ++){
+					var j = Math.round(Math.random()*(alphabet.length-1));
+					cipherAlphabet.push(alphabet[j]);
+					alphabet.splice(j, 1);
+				}
+				alphabet = inputAlphabet;
+				var cipherAlphabetLC = toLC(cipherAlphabet);
+				if(capson.checked){
+					cipherAlphabetLC = cipherAlphabet;
+				}
+				inputLetters = byId("text").value.split("");
+				for(var i in inputLetters){
+					var k = 0;
+					for(var j in inputAlphabet){
+						if(inputLetters[i] == inputAlphabet[j]){
+							outputLetters.push(cipherAlphabet[j]);
+						}else if(inputLetters[i] == inputAlphabetLC[j]){
+							outputLetters.push(cipherAlphabetLC[j]);
+						}else{
+							k++;
+						}
+					}
+					if(k == 26){
+						outputLetters.push(inputLetters[i]);
+					}
+				}
+				for(var i in outputLetters){
+					cipherText += outputLetters[i];
+				}
+				byId("text").value = "";
+				byId("output_text").innerHTML = cipherText;
+				console.log(toLC(["M", "Y", "k"]));
+			});
+		</script>
+	</body>
+</html>
