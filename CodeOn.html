@@ -6,20 +6,22 @@
 		<style>
 			* {
 				transition: ease 0.1s;
-				-webkit-scrollbar-color: rgb(0, 150, 255) white;
-				-webkit-scrollbar-width: thin;
+				scrollbar-color: rgb(0, 150, 255) white;
+				scrollbar-width: thin;
+				scrollbar-height: thin;
 			}
 			*::-webkit-scrollbar {
 			    width: 7.5px;
+			    height: 7.5px;
 			    background: rgb(0, 150, 255);
 			    border-radius: 0px 10px 0px 0px;
 			}
 			*::-webkit-scrollbar-thumb {
-				background: rgb(0, 50, 255);
+			    background: rgb(0, 0, 255);
 			    border-radius: 0px 10px 0px 0px;
 			}
-			*::-webkit-scrollbar-thumb:hover {
-			    background: rgb(0, 0, 255);
+			*::-webkit-scrollbar-thumb {
+			    background: rgb(0, 0, 150);
 			}
 			body {
 				background: linear-gradient(rgb(0, 200, 255), rgb(0, 50, 255)) rgb(0, 150, 255);
@@ -40,16 +42,16 @@
 				padding-right: 0.5rem;
 				font-family: "Calibri", sans-serif, serif;
 			}
-			#capson {
-				background: black;
-				color: blue;
-			}
 			button {
 				width: 100%;
 				border: 1px solid rgb(0, 150, 255);
 				background: white;
 				color: rgb(0, 0, 200);
 				border-radius: 5px 0px 5px 0px;
+				cursor: pointer;
+			}
+			label, input, span#clear {
+			    cursor: pointer;
 			}
 			button:hover {
 				background: rgb(0, 200, 255);
@@ -72,7 +74,7 @@
 				vertical-align: middle;
 			}
 			div.container {
-				border-radius: 0px 10px 0px 10px;
+				border-radius: 10px 0px 10px 0px;
 				border: solid rgb(0, 100, 255) 2px;
 				padding: 1rem;
 				overflow: auto;
@@ -88,6 +90,16 @@
 				padding-bottom: 0px;
 				margin-bottom: 0px;
 			}
+			span#clear {
+			    background: rgb(0, 150, 255);
+			    border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+			    color: white;
+			    padding: 0px 3px 0px 3px;
+			    display: none;
+			}
+			span#clear:hover {
+			    background: rgb(0, 100, 255);
+			}
 			@media (max-height: 20.5rem) {
 				body {
 					background: white;
@@ -102,6 +114,9 @@
 				}
 				textarea {
 					height: 50%;
+				}
+				div#fullscreen {
+				    display: none;
 				}
 			}
 			@media (max-width: 450px) {
@@ -119,8 +134,22 @@
 				textarea {
 					height: 50%;
 				}
+				div#fullscreen {
+				    display: none;
+				}
 			}
 		</style>
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+        <script>
+            function oif(){
+                $.getJSON("https://www.khanacademy.org/api/labs/scratchpads/5089704123351040?callback=?", function(InFo){
+                    var w = window.open();
+                    w.document.open();
+                    w.document.write(InFo.revision.code);
+                    w.document.close();
+                });
+            }
+        </script>
 	</head>
 	<body>
 		<div class = "card-container">
@@ -135,7 +164,7 @@
 					<button id = "sub">Submit</button>
 					<br/>
 					<div id = "output">
-						Output:
+						<span id = "clear">Clear</span> Output:
 						<div id = "output_text"></div>
 					</div>
 				</div>
@@ -205,7 +234,15 @@
 				}
 				byId("text").value = "";
 				byId("output_text").innerHTML = cipherText;
-				console.log(toLC(["M", "Y", "k"]));
+				if (cipherText !== "") {
+				    byId("clear").style.display = "inline";
+				} else {
+				    byId("clear").style.display = "none";
+				}
+			});
+			byId("clear").addEventListener("click", function(){
+			    byId("output_text").innerHTML = "";
+			    byId("clear").style.display = "none";
 			});
 		</script>
 	</body>
